@@ -1159,6 +1159,21 @@ class DisplayController:
             return None
 
     async def handle_status_update(self, new_data, data_mapping=None):
+        status_response = requests.get("http://moonraker:7125/printer/status")
+        status = status_response.json()
+        save_vars_response = requests.get("http://moonraker:7125/printer/save_variables")
+        save_vars = save_vars_response.json()["variables"]
+        if 'virtual_sdcard' in status and status['virtual_sdcard'].get('file_path') and save_vars.get('was_interrupted', False) and not status['virtual_sdcard'].get('is_active', False):
+            self.show_resume_screen()
+        else:
+        # Show normal status screen based on state
+        if status["state"] == "printing":
+            self.show_printing_screen()
+        elif status["state"] == "paused":
+            self.show_paused_screen()
+        else:
+            self.show_idle_screen()
+        
         if data_mapping is None:
             data_mapping = self.display.mapper.data_mapping
 
