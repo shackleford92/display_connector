@@ -15,7 +15,19 @@ PAGE_SETTINGS_TEMPERATURE = "settings_temperature"
 PAGE_SETTINGS_TEMPERATURE_SET = "settings_temperature_set"
 PAGE_SETTINGS_ABOUT = "settings_about"
 PAGE_SETTINGS_ADVANCED = "settings_advanced"
-
+# In mapping.py, where UI elements are defined:
+ui_layout = {
+    PAGE_SETTINGS_ADVANCED: [
+        # ... other buttons ...
+        {
+            "type": "button",
+            "name": "plr_button",
+            "label": "Power Loss Recovery",
+            "command": "PLR_RESTORE",  # Klipper macro from plr_macros.cfg
+            "icon": "alert"
+        }
+    ]
+}
 
 PAGE_CONFIRM_PRINT = "confirm_print"
 PAGE_PRINTING = "printing"
